@@ -14,7 +14,7 @@
   const barcodeButton_spaceId_FormData = document.getElementById(
     'barcodeButton-spaceId',
   );
-  const barcode_filedCode_FormData =
+  const barcode_fieldCode_FormData =
     document.getElementById('barcode-fieldCode');
 
   // プラグイン設定情報を取得
@@ -22,7 +22,7 @@
 
   // プラグインの設定情報に値があれば初期値として表示
   barcodeButton_spaceId_FormData.value = config.barcodeButton_spaceId || '';
-  barcode_filedCode_FormData.value = config.barcode_fieldCode || '';
+  barcode_fieldCode_FormData.value = config.barcode_fieldCode || '';
 
   const appId = kintone.app.getId();
 
@@ -32,7 +32,7 @@
     const barcodeButton_spaceId = escapeHtml(
       barcodeButton_spaceId_FormData.value,
     );
-    const barcode_filedCode = escapeHtml(barcode_filedCode_FormData.value);
+    const barcode_fieldCode = escapeHtml(barcode_fieldCode_FormData.value);
 
     if (barcodeButton_spaceId === '' || barcode_filedCode === '') {
       alert('必須項目が入力されていません');
@@ -42,7 +42,7 @@
     // 設定の保存
     const newConfig = {
       barcodeButton_spaceId,
-      barcode_filedCode,
+      barcode_fieldCode,
     };
     kintone.plugin.app.setConfig(newConfig, () => {
       window.location.href = `/k/admin/app/flow?app=${appId}`;
