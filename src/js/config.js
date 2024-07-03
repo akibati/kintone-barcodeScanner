@@ -38,7 +38,7 @@
       alert('必須項目が入力されていません');
       return;
     }
-
+    console.log(barcode_fieldCode);
     // 設定の保存
     const newConfig = {
       barcodeButton_spaceId,

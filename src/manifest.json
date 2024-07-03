@@ -12,7 +12,7 @@
     "html": "html/config.html",
     "js": ["js/dist/config.js"],
     "css": ["css/51-modern-default.css", "css/config.css"],
-    "required_params": ["message"]
+    "required_params": ["barcodeButton_spaceId", "barcode_fieldCode"]
   },
   "name": {
     "en": "kintone-barcodeScanner"
