@@ -4,13 +4,13 @@
   "version": 1,
   "type": "APP",
   "desktop": {
-    "js": ["js/desktop.js"],
+    "js": ["js/dist/desktop.js"],
     "css": ["css/51-modern-default.css", "css/desktop.css"]
   },
   "icon": "image/icon.png",
   "config": {
     "html": "html/config.html",
-    "js": ["js/config.js"],
+    "js": ["js/dist/config.js"],
     "css": ["css/51-modern-default.css", "css/config.css"],
     "required_params": ["message"]
   },
@@ -19,9 +19,5 @@
   },
   "description": {
     "en": "kintone-barcodeScanner"
-  },
-  "mobile": {
-    "js": ["js/mobile.js"],
-    "css": ["css/mobile.css"]
   }
 }
