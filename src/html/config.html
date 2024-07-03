@@ -1,16 +1,47 @@
-<section class="settings">
-  <h2 class="settings-heading">Settings for kintone-barcodeSccaner</h2>
-  <p class="kintoneplugin-desc">This message is displayed on the app page after the app has been updated.</p>
-  <form class="js-submit-settings">
-    <p class="kintoneplugin-row">
-      <label for="message">
-        Message:
-        <input type="text" class="js-text-message kintoneplugin-input-text">
-      </label>
-    </p>
-    <p class="kintoneplugin-row">
-        <button type="button" class="js-cancel-button kintoneplugin-button-dialog-cancel">Cancel</button>
-        <button class="kintoneplugin-button-dialog-ok">Save</button>
-    </p>
-  </form>
-</section>
+<div>
+  <div class="setting">
+    <label class="kintoneplugin-label" for="barcodeButton-spaceId">
+      <span>スキャン起動ボタン用スペースID</span>
+      <span class="kintoneplugin-require">*</span>
+    </label>
+    <div class="kintoneplugin-row">
+      バーコードスキャンを起動するボタンのスペースIDを入力して下さい。
+    </div>
+    <div class="kintoneplugin-input-outer">
+      <input
+        id="barcodeButton-spaceId"
+        class="kintoneplugin-input-text"
+        type="text"
+      />
+    </div>
+  </div>
+  <div class="setting">
+    <label class="kintoneplugin-label" for="barcode-fieldCode">
+      <span>バーコードをセットするフィールドコード</span>
+      <span class="kintoneplugin-require">*</span>
+    </label>
+    <div class="kintoneplugin-row">
+      スキャンしたバーコードをセットするフィールドコードを入力して下さい。
+    </div>
+    <div class="kintoneplugin-row">文字列（1行）のみ対応</div>
+    <div class="kintoneplugin-input-outer">
+      <input
+        id="barcode-fieldCode"
+        class="kintoneplugin-input-text"
+        type="text"
+      />
+    </div>
+  </div>
+  <div class="setting">
+    <button type="button" id="submit" class="kintoneplugin-button-dialog-ok">
+      保存する
+    </button>
+    <button
+      type="button"
+      id="cancel"
+      class="kintoneplugin-button-dialog-cancel"
+    >
+      キャンセル
+    </button>
+  </div>
+</div>
