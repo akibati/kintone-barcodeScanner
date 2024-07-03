@@ -1,25 +1,57 @@
 (function (PLUGIN_ID) {
-  const formEl = document.querySelector('.js-submit-settings');
-  const cancelButtonEl = document.querySelector('.js-cancel-button');
-  const messageEl = document.querySelector('.js-text-message');
-  if (!(formEl && cancelButtonEl && messageEl)) {
-    throw new Error('Required elements do not exist.');
-  }
+  // エスケープ処理
+  const escapeHtml = (htmlstr) => {
+    return htmlstr
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/\n/g, '&#xA;');
+  };
 
+  // 設定画面のフォーム情報を取得
+  const barcodeButton_spaceId_FormData = document.getElementById(
+    'barcodeButton-spaceId',
+  );
+  const barcode_filedCode_FormData =
+    document.getElementById('barcode-fieldCode');
+
+  // プラグイン設定情報を取得
   const config = kintone.plugin.app.getConfig(PLUGIN_ID);
-  if (config.message) {
-    messageEl.value = config.message;
-  }
 
-  formEl.addEventListener('submit', (e) => {
-    e.preventDefault();
-    kintone.plugin.app.setConfig({ message: messageEl.value }, () => {
-      alert('The plug-in settings have been saved. Please update the app!');
-      window.location.href = '../../flow?app=' + kintone.app.getId();
+  // プラグインの設定情報に値があれば初期値として表示
+  barcodeButton_spaceId_FormData.value = config.barcodeButton_spaceId || '';
+  barcode_filedCode_FormData.value = config.barcode_fieldCode || '';
+
+  const appId = kintone.app.getId();
+
+  // 保存
+  const saveButton = document.getElementById('submit');
+  saveButton.addEventListener('click', () => {
+    const barcodeButton_spaceId = escapeHtml(
+      barcodeButton_spaceId_FormData.value,
+    );
+    const barcode_filedCode = escapeHtml(barcode_filedCode_FormData.value);
+
+    if (barcodeButton_spaceId === '' || barcode_filedCode === '') {
+      alert('必須項目が入力されていません');
+      return;
+    }
+
+    // 設定の保存
+    const newConfig = {
+      barcodeButton_spaceId,
+      barcode_filedCode,
+    };
+    kintone.plugin.app.setConfig(newConfig, () => {
+      window.location.href = `/k/admin/app/flow?app=${appId}`;
     });
   });
 
-  cancelButtonEl.addEventListener('click', () => {
-    window.location.href = '../../' + kintone.app.getId() + '/plugin/';
+  // キャンセル
+  const cancelButton = document.getElementById('cancel');
+  cancelButton.addEventListener('click', () => {
+    window.location.href = `/k/admin/app/${appId}/plugin/`;
   });
 })(kintone.$PLUGIN_ID);
