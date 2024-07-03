@@ -34,7 +34,7 @@
     );
     const barcode_fieldCode = escapeHtml(barcode_fieldCode_FormData.value);
 
-    if (barcodeButton_spaceId === '' || barcode_filedCode === '') {
+    if (barcodeButton_spaceId === '' || barcode_fieldCode === '') {
       alert('必須項目が入力されていません');
       return;
     }
