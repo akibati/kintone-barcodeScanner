@@ -3,26 +3,18 @@ const Kuc = require('kintone-ui-component');
 const Quagga = require('@ericblade/quagga2').default;
 
 jQuery.noConflict();
-(function ($, PLUGIN_ID) {
+(($, PLUGIN_ID) => {
   // プラグイン設定情報の取得
-  /*
   const config = kintone.plugin.app.getConfig(PLUGIN_ID) || {};
   if (Object.keys(config).length === 0) {
     return;
   }
-  */
-  /*
   const barcodeButtonId = config.barcodeButton_spaceId;
-  const barcodeCanvasId = config.barcodeCanvas_spaceId;
   const barcodeFieldCode = config.barcode_fieldCode;
-  */
-  const barcodeButtonId = 'spc_button';
-  const canvasId = 'spc_canvas';
-  const barcodeFieldCode = 'barcode';
 
-  let BarcodeReader = function () {
-    let my = this;
-    let div = $('<div>').css({
+  const BarcodeReader = function () {
+    const my = this;
+    const div = $('<div>').css({
       'box-sizing': 'border-box',
     });
     /* append elements */
@@ -104,7 +96,7 @@ jQuery.noConflict();
                   width: 'auto',
                 })
                 .text('キャンセル')
-                .on('click', function () {
+                .on('click', () => {
                   my.hide();
                 }),
             ),
@@ -116,12 +108,12 @@ jQuery.noConflict();
   BarcodeReader.prototype = {
     /* show reader */
     show: function (callback) {
-      let my = this;
-      let video = document.getElementById('barcodevideo');
-      let getbarcode = function () {
+      const my = this;
+      const video = document.getElementById('barcodevideo');
+      const getbarcode = () => {
         if (video.autoplay)
-          setTimeout(function () {
-            let canvas = document.createElement('canvas');
+          setTimeout(() => {
+            const canvas = document.createElement('canvas');
             canvas.height = video.offsetHeight;
             canvas.width = video.offsetWidth;
             canvas
@@ -140,7 +132,7 @@ jQuery.noConflict();
                 locate: true,
                 src: canvas.toDataURL('image/png'),
               },
-              function (result) {
+              (result) => {
                 if (result) {
                   if (result.codeResult) {
                     callback(result.codeResult.code);
@@ -151,26 +143,26 @@ jQuery.noConflict();
             );
           }, 250);
       };
-      let getstream = function () {
-        let constraints =
+      const getstream = () => {
+        const constraints =
           availableDevice() !== 'other'
             ? { audio: false, video: { facingMode: { exact: 'environment' } } }
             : { audio: false, video: true };
         if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
         if (navigator.mediaDevices.getUserMedia === undefined) {
-          navigator.mediaDevices.getUserMedia = function (constraints) {
-            let getUserMedia =
+          navigator.mediaDevices.getUserMedia = (mediaConstraints) => {
+            const getUserMedia =
               navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
             if (!getUserMedia)
-              return new Promise(function (resolve, reject) {
+              return new Promise((resolve, reject) => {
                 reject(
                   Error(
                     '現在利用中のブラウザはストリーミング機能をサポートしておりません。',
                   ),
                 );
               });
-            return new Promise(function (resolve, reject) {
-              getUserMedia.call(navigator, constraints, resolve, reject);
+            return new Promise((resolve, reject) => {
+              getUserMedia.call(navigator, mediaConstraints, resolve, reject);
             });
           };
         }
@@ -179,24 +171,24 @@ jQuery.noConflict();
       video.autoplay = true;
       video.setAttribute('playsinline', '');
       getstream()
-        .then(function (stream) {
+        .then((stream) => {
           video.srcObject = stream;
           getbarcode();
           my.cover.show();
         })
-        .catch(function (e) {
+        .catch((e) => {
           alert(e);
         });
     },
     /* hide reader */
     hide: function () {
-      let video = document.getElementById('barcodevideo');
+      const video = document.getElementById('barcodevideo');
       video.autoplay = false;
       this.cover.hide();
     },
   };
   let availableDevice = () => {
-    let ua = navigator.userAgent;
+    const ua = navigator.userAgent;
     if (
       ua.indexOf('iPhone') > 0 ||
       ua.indexOf('iPod') > 0 ||
@@ -218,7 +210,7 @@ jQuery.noConflict();
 
     scanButton.addEventListener('click', () => {
       barcodeReader.show((value) => {
-        let record = kintone.app.record.get();
+        const record = kintone.app.record.get();
         record.record[barcodeFieldCode].value = value;
         kintone.app.record.set(record);
       });
