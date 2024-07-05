@@ -144,11 +144,16 @@ jQuery.noConflict();
           }, 250);
       };
       const getstream = () => {
-        const constraints =
-          availableDevice() !== 'other'
-            ? { audio: false, video: { facingMode: { exact: 'environment' } } }
-            : { audio: false, video: true };
+        // const constraints =
+        //   availableDevice() !== 'other'
+        //     ? { audio: false, video: { facingMode: { exact: 'environment' } } }
+        //     : { audio: false, video: true };
+        const constraints = {
+          audio: false,
+          video: { facingMode: { exact: 'environment' } },
+        };
         if (navigator.mediaDevices === undefined) navigator.mediaDevices = {};
+
         if (navigator.mediaDevices.getUserMedia === undefined) {
           navigator.mediaDevices.getUserMedia = (mediaConstraints) => {
             const getUserMedia =
@@ -188,15 +193,15 @@ jQuery.noConflict();
     },
   };
   let availableDevice = () => {
-    const ua = navigator.userAgent;
+    const ua = navigator.userAgent.toLowerCase();
     if (
-      ua.indexOf('iPhone') > 0 ||
-      ua.indexOf('iPod') > 0 ||
-      (ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0) ||
-      ua.indexOf('Windows Phone') > 0
+      ua.indexOf('iphone') > 0 ||
+      ua.indexOf('ipod') > 0 ||
+      (ua.indexOf('android') > 0 && ua.indexOf('mobile') > 0) ||
+      ua.indexOf('windows phone') > 0
     )
       return 'sp';
-    if (ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) return 'tab';
+    if (ua.indexOf('ipad') > 0 || ua.indexOf('android') > 0) return 'tab';
     return 'other';
   };
 
